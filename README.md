@@ -1,10 +1,12 @@
-# 💻 Portfólio Pessoal
+#  Portfólio Pessoal
+
+**Feito por:** Letícia Figueiredo e Murilo Freitas
 
 Projeto de portfólio web desenvolvido com tecnologias modernas para apresentar experiências, projetos e habilidades profissionais de forma interativa, fluida e responsiva.
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias
 
 * **[React](https://react.dev/)** — Biblioteca para construção de interfaces de usuário (v19).
 * **[TypeScript](https://www.typescriptlang.org/)** — Superset JavaScript com tipagem estática.
@@ -14,7 +16,7 @@ Projeto de portfólio web desenvolvido com tecnologias modernas para apresentar 
 
 ---
 
-## 📦 Dependências e Bibliotecas / Frameworks
+##  Dependências e Bibliotecas / Frameworks
 
 ### Dependências Principais
 
@@ -29,7 +31,7 @@ Projeto de portfólio web desenvolvido com tecnologias modernas para apresentar 
 
 ---
 
-## 📁 Estrutura de Diretórios do Projeto
+##  Estrutura de Diretórios do Projeto
 
 ```text
 frontend/
