@@ -1,36 +1,36 @@
-import { Project, Skill } from '../types';
+import type { Project, Skill } from '../types';
 
 export const PROJECTS: Project[] = [
   {
     id: '1',
     title: 'Café Rabisco',
-    description: 'Identidade visual e embalagens para torrefadora artesanal, inspirada em cadernos de campo de baristas.',
-    tags: ['branding', 'packaging'],
+    description: 'Plataforma de e-commerce para torrefadora artesanal, com painel de estoque e checkout próprio.',
+    tags: ['react', 'node.js'],
   },
   {
     id: '2',
     title: 'Trilha Urbana',
-    description: 'App de mapas colaborativos com ilustrações manuais e microinterações desenhadas à mão.',
-    tags: ['ui/ux', 'ilustração'],
+    description: 'App de mapas colaborativos com geolocalização em tempo real e sincronização offline-first.',
+    tags: ['react native', 'graphql'],
   },
   {
     id: '3',
     title: 'Editora Semente',
-    description: 'Capas de livros infantis e sistema de tipografia manuscrita para uma coleção de contos.',
-    tags: ['editorial', 'lettering'],
+    description: 'CMS headless e API de catálogo para uma editora de livros infantis, com deploy automatizado.',
+    tags: ['typescript', 'postgresql'],
   },
   {
     id: '4',
     title: 'Feira Miúda',
-    description: 'Sinalização e material gráfico para feira de artesanato local, tudo desenhado à nanquim.',
-    tags: ['sinalização', 'print'],
+    description: 'Sistema de inscrição e gestão de expositores para feira de artesanato local, com painel admin.',
+    tags: ['next.js', 'docker'],
   },
 ];
 
 export const SKILLS: Skill[] = [
-  { name: 'Ilustração', level: 92 },
-  { name: 'Branding', level: 85 },
-  { name: 'UI/UX', level: 75 },
-  { name: 'Lettering', level: 88 },
-  { name: 'Motion simples', level: 60 },
+  { name: 'React', level: 92 },
+  { name: 'TypeScript', level: 85 },
+  { name: 'Node.js', level: 80 },
+  { name: 'Bancos de dados', level: 78 },
+  { name: 'DevOps básico', level: 60 },
 ];

@@ -1,10 +1,43 @@
 @import "tailwindcss";
 
-@layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-  ::selection {
-    background: #F4C23D;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Architects+Daughter&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+:root{
+  --paper:#F6EFE1;
+  --paper-2:#EFE6D2;
+  --ink:#221F1B;
+  --pencil:#736A5C;
+  --red:#E14B32;
+  --blue:#33538E;
+  --yellow:#F4C23D;
+  --line: rgba(34,31,27,0.16);
+}
+
+html{ scroll-behavior:smooth; }
+
+body{
+  margin:0;
+  background-color:var(--paper);
+  background-image: radial-gradient(rgba(34,31,27,0.035) 1px, transparent 1px);
+  background-size: 6px 6px;
+  color:var(--ink);
+  font-family:'Space Grotesk', sans-serif;
+  line-height:1.5;
+  overflow-x:hidden;
+}
+
+::selection{ background:var(--yellow); }
+
+/* Borda rabiscada idêntica ao design original */
+.sketchy{
+  position:relative;
+}
+.sketchy::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border:2px solid var(--ink);
+  border-radius:3px 14px 4px 12px / 12px 4px 14px 3px;
+  filter:url(#roughen);
+  pointer-events:none;
 }
