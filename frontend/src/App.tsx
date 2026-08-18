@@ -63,52 +63,52 @@ export function App() {
         <div className="wrap" style={{ maxWidth: '980px', margin: '0 auto', padding: '0 28px' }}>
           
           <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '22px 0' }}>
-            <div className="logo" style={{ fontFamily: 'Caveat, cursive', fontSize: '2rem', fontWeight: 700 }}>
-              {theme.name}
+            <div className="logo font-archivo text-3xl font-bold tracking-tight">
+              {theme.name}.
             </div>
-            <ul className="nav-links" style={{ display: 'flex', gap: '28px', listStyle: 'none', margin: 0, padding: 0, fontFamily: 'Space Mono, monospace', fontSize: '0.82rem' }}>
-              <li><a href="#sobre" style={{ textDecoration: 'none', position: 'relative', paddingBottom: '4px', color: 'inherit' }}>sobre</a></li>
-              <li><a href="#trabalhos" style={{ textDecoration: 'none', position: 'relative', paddingBottom: '4px', color: 'inherit' }}>trabalhos</a></li>
-              <li><a href="#habilidades" style={{ textDecoration: 'none', position: 'relative', paddingBottom: '4px', color: 'inherit' }}>habilidades</a></li>
-              <li><a href="#contato" style={{ textDecoration: 'none', position: 'relative', paddingBottom: '4px', color: 'inherit' }}>contato</a></li>
+            <ul className="nav-links flex gap-7 list-none m-0 p-0 font-mono text-[0.82rem]">
+              <li><a href="#sobre" className="no-underline relative pb-1 text-inherit hover:opacity-75 transition-opacity">sobre</a></li>
+              <li><a href="#trabalhos" className="no-underline relative pb-1 text-inherit hover:opacity-75 transition-opacity">trabalhos</a></li>
+              <li><a href="#habilidades" className="no-underline relative pb-1 text-inherit hover:opacity-75 transition-opacity">habilidades</a></li>
+              <li><a href="#contato" className="no-underline relative pb-1 text-inherit hover:opacity-75 transition-opacity">contato</a></li>
             </ul>
           </nav>
 
           {/* HERO */}
-          <section ref={heroRef} className="hero" style={{ padding: '56px 0 90px', display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '40px', alignItems: 'center' }}>
+          <section ref={heroRef} className="hero py-14 pb-[90px] grid grid-cols-[1.2fr_0.8fr] gap-10 items-center">
             <div>
-              <span className="eyebrow hero-tag sketchy" style={{ display: 'inline-block', padding: '6px 14px', marginBottom: '18px', fontFamily: 'Space Mono, monospace', fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: theme.pencil }}>
+              <span className="eyebrow hero-tag sketchy inline-block px-3.5 py-1.5 mb-[18px] font-mono text-[0.72rem] tracking-[0.12em] uppercase" style={{ color: theme.pencil }}>
                 {theme.tag}
               </span>
-              <h1 style={{ fontFamily: 'Caveat, cursive', fontWeight: 700, margin: 0, lineHeight: 1.05, fontSize: '5rem', marginBottom: '6px' }}>
+              <h1 className="font-caveat font-bold m-0 leading-[1.05] text-[5rem] mb-1.5">
                 Oi, eu sou<br />
-                <span className="circled" style={{ position: 'relative', display: 'inline-block', padding: '0 6px' }}>
+                <span className="circled relative inline-block px-1.5">
                   {theme.name}
                   <svg viewBox="0 0 200 90" fill="none" style={{ position: 'absolute', inset: '-14px -10px', width: 'calc(100% + 20px)', height: 'calc(100% + 28px)', zIndex: -1 }}>
                     <path d="M15 45 C 10 15, 60 5, 100 8 C 150 11, 195 20, 190 45 C 186 72, 130 85, 90 82 C 45 79, 8 68, 15 45 Z" stroke={theme.yellow} strokeWidth="6" strokeLinecap="round" />
                   </svg>
                 </span>
               </h1>
-              <p className="hero-role" style={{ fontFamily: 'Architects Daughter, cursive', fontSize: '1.35rem', color: theme.blue, marginTop: '6px' }}>
+              <p className="hero-role font-architects text-[1.35rem] mt-1.5" style={{ color: theme.blue }}>
                 {theme.role}
               </p>
-              <p className="desc" style={{ maxWidth: '46ch', marginTop: '20px', color: theme.pencil }}>
+              <p className="desc font-roboto max-w-[46ch] mt-5 text-sm md:text-base leading-relaxed" style={{ color: theme.pencil }}>
                 {theme.bio}
               </p>
-              <div className="hero-cta" style={{ marginTop: '30px', display: 'flex', gap: '18px', alignItems: 'center' }}>
-                <a href="#trabalhos" className="btn sketchy" style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.85rem', background: theme.ink, color: theme.paper, border: 'none', padding: '14px 24px', cursor: 'pointer', position: 'relative', textDecoration: 'none', display: 'inline-block' }}>
+              <div className="hero-cta mt-[30px] flex gap-[18px] items-center">
+                <a href="#trabalhos" className="btn sketchy font-mono text-[0.85rem] border-none px-6 py-3.5 cursor-pointer relative no-underline inline-block" style={{ background: theme.ink, color: theme.paper }}>
                   ver trabalhos →
                 </a>
-                <a href="#contato" className="btn outline sketchy" style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.85rem', background: 'transparent', color: theme.ink, border: 'none', padding: '12px 22px', cursor: 'pointer', position: 'relative', textDecoration: 'none', display: 'inline-block' }}>
+                <a href="#contato" className="btn outline sketchy font-mono text-[0.85rem] bg-transparent border-none px-[22px] py-3 cursor-pointer relative no-underline inline-block" style={{ color: theme.ink }}>
                   bater um papo
                 </a>
               </div>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
-              <div className="portrait-frame" style={{ position: 'relative', width: '100%', aspectRatio: '1/1.05', transform: 'rotate(-1.5deg)' }}>
-                <div className="tape" style={{ position: 'absolute', width: '70px', height: '26px', background: theme.yellow, top: '-14px', left: '50%', transform: 'translateX(-50%) rotate(-3deg)', boxShadow: '0 1px 2px rgba(0,0,0,0.15)', opacity: 0.6 }}></div>
-                <svg className="face" viewBox="0 0 200 210" fill="none" style={{ position: 'absolute', inset: '14px', width: 'calc(100% - 28px)', height: 'calc(100% - 28px)' }}>
+            <div className="flex flex-col items-center gap-4">
+              <div className="portrait-frame relative w-full aspect-[1/1.05] -rotate-2">
+                <div className="tape absolute w-[70px] h-[26px] -top-[14px] left-1/2 -translate-x-1/2 -rotate-3 shadow-[0_1px_2px_rgba(0,0,0,0.15)] opacity-60" style={{ background: theme.yellow }}></div>
+                <svg className="face absolute inset-3.5 w-[calc(100%-28px)] h-[calc(100%-28px)]" viewBox="0 0 200 210" fill="none">
                   <path d="M50 90 C 45 40, 150 40, 148 92 C 150 130, 140 165, 100 168 C 60 165, 48 130, 50 90 Z" stroke={theme.ink} strokeWidth="3" strokeLinecap="round" />
                   <path d="M68 92 Q 74 85, 82 92" stroke={theme.ink} strokeWidth="3" strokeLinecap="round" />
                   <path d="M118 92 Q 124 85, 132 92" stroke={theme.ink} strokeWidth="3" strokeLinecap="round" />
@@ -121,42 +121,36 @@ export function App() {
               {/* Botão de alternância logo abaixo da foto */}
               <button
                 onClick={toggleUser}
+                className="font-mono text-xs font-bold px-4 py-2.5 cursor-pointer shadow-sm mt-2 transition-transform active:scale-95"
                 style={{
-                  fontFamily: 'Space Mono, monospace',
-                  fontSize: '0.8rem',
-                  fontWeight: 'bold',
                   background: theme.yellow,
                   color: '#221F1B',
                   border: '2px solid #221F1B',
-                  padding: '10px 18px',
-                  cursor: 'pointer',
                   borderRadius: '3px 14px 4px 12px/12px 4px 14px 3px',
-                  boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
-                  marginTop: '8px'
                 }}
               >
-                🔄 Trocar para {targetName}
+                Trocar para {targetName} 🔄
               </button>
             </div>
           </section>
 
           {/* SOBRE */}
-          <section className="section" id="sobre" style={{ padding: '70px 0', borderTop: `2px dashed ${theme.line}` }}>
-            <div className="section-head" style={{ display: 'flex', alignItems: 'baseline', gap: '16px', marginBottom: '44px' }}>
-              <span className="num" style={{ fontFamily: 'Space Mono, monospace', color: theme.pencil, fontSize: '0.9rem' }}>01</span>
-              <h2 style={{ fontFamily: 'Caveat, cursive', fontWeight: 700, margin: 0, lineHeight: 1.05, fontSize: '2.8rem' }}>minha trajetória</h2>
+          <section className="section py-[70px]" id="sobre" style={{ borderTop: `2px dashed ${theme.line}` }}>
+            <div className="section-head flex items-baseline gap-4 mb-11">
+              <span className="num font-mono text-sm" style={{ color: theme.pencil }}>01</span>
+              <h2 className="font-caveat font-bold m-0 leading-[1.05] text-[2.8rem]">minha trajetória</h2>
             </div>
-            <div className="about-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '50px', alignItems: 'start' }}>
-              <div className="index-card sketchy" style={{ padding: '26px 26px 30px', position: 'relative', background: theme.paper2, transform: 'rotate(0.8deg)' }}>
-                <span className="eyebrow" style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: theme.pencil }}>nota pessoal</span>
-                <p style={{ marginTop: '14px', color: theme.pencil }}>Comecei escrevendo scripts para automatizar tarefas e nunca parei. Hoje ajudo times a transformar ideias soltas em software robusto e estruturado.</p>
-                <p style={{ marginTop: '14px', color: theme.pencil }}>Café, terminal aberto e foco em eficiência são fundamentais no dia a dia.</p>
+            <div className="about-grid grid grid-cols-2 gap-[50px] items-start">
+              <div className="index-card sketchy p-[26px] relative rotate-[0.8deg]" style={{ background: theme.paper2 }}>
+                <span className="eyebrow font-mono text-[0.72rem] tracking-[0.12em] uppercase" style={{ color: theme.pencil }}>nota pessoal</span>
+                <p className="font-roboto mt-3.5 text-sm leading-relaxed" style={{ color: theme.pencil }}>Comecei escrevendo scripts para automatizar tarefas e nunca parei. Hoje ajudo times a transformar ideias soltas em software robusto e estruturado.</p>
+                <p className="font-roboto mt-3.5 text-sm leading-relaxed" style={{ color: theme.pencil }}>Café, terminal aberto e foco em eficiência são fundamentais no dia a dia.</p>
               </div>
-              <div className="margin-notes" style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-                <div className="note" style={{ fontFamily: 'Architects Daughter, cursive', fontSize: '1.05rem', color: theme.ink, position: 'relative', paddingLeft: '34px' }}>
+              <div className="margin-notes flex flex-col gap-[22px]">
+                <div className="note font-architects text-[1.05rem] relative pl-[34px]" style={{ color: theme.ink }}>
                   <svg viewBox="0 0 24 24" fill="none" style={{ position: 'absolute', left: 0, top: '2px', width: '24px', height: '24px' }}><path d="M4 12 C 4 4, 20 4, 20 12 C 20 20, 4 20, 4 12 Z" stroke={theme.blue} strokeWidth="2" /></svg>foco em código limpo e arquitetura
                 </div>
-                <div className="note" style={{ fontFamily: 'Architects Daughter, cursive', fontSize: '1.05rem', color: theme.ink, position: 'relative', paddingLeft: '34px' }}>
+                <div className="note font-architects text-[1.05rem] relative pl-[34px]" style={{ color: theme.ink }}>
                   <svg viewBox="0 0 24 24" fill="none" style={{ position: 'absolute', left: 0, top: '2px', width: '24px', height: '24px' }}><path d="M4 12 C 4 4, 20 4, 20 12 C 20 20, 4 20, 4 12 Z" stroke={theme.blue} strokeWidth="2" /></svg>+40 projetos e entregas estruturadas
                 </div>
               </div>
@@ -164,29 +158,27 @@ export function App() {
           </section>
 
           {/* PROJETOS */}
-          <section className="section" id="trabalhos" style={{ padding: '70px 0', borderTop: `2px dashed ${theme.line}` }}>
-            <div className="section-head" style={{ display: 'flex', alignItems: 'baseline', gap: '16px', marginBottom: '44px' }}>
-              <span className="num" style={{ fontFamily: 'Space Mono, monospace', color: theme.pencil, fontSize: '0.9rem' }}>02</span>
-              <h2 style={{ fontFamily: 'Caveat, cursive', fontWeight: 700, margin: 0, lineHeight: 1.05, fontSize: '2.8rem' }}>trabalhos recentes</h2>
+          <section className="section py-[70px]" id="trabalhos" style={{ borderTop: `2px dashed ${theme.line}` }}>
+            <div className="section-head flex items-baseline gap-4 mb-11">
+              <span className="num font-mono text-sm" style={{ color: theme.pencil }}>02</span>
+              <h2 className="font-caveat font-bold m-0 leading-[1.05] text-[2.8rem]">trabalhos recentes</h2>
             </div>
-            <div className="projects-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '36px' }}>
+            <div className="projects-grid grid grid-cols-2 gap-9">
               {PROJECTS.map((project, index) => (
                 <div 
                   key={project.id} 
-                  className="project-card sketchy" 
+                  className="project-card sketchy p-[22px] relative" 
                   style={{ 
-                    padding: '22px', 
-                    position: 'relative', 
                     transform: index === 0 ? 'rotate(-1.2deg)' : index === 1 ? 'rotate(1deg)' : index === 2 ? 'rotate(0.6deg)' : 'rotate(-0.8deg)' 
                   }}
                 >
-                  <div className="pin" style={{ position: 'absolute', top: '-9px', left: '24px', width: '16px', height: '16px', borderRadius: '50%', background: theme.red, boxShadow: '0 2px 3px rgba(0,0,0,0.25)' }}></div>
-                  <div className="thumb sketchy" style={{ height: '150px', marginBottom: '16px', position: 'relative', overflow: 'hidden', background: theme.paper2 }}></div>
-                  <h3 style={{ fontFamily: 'Caveat, cursive', fontWeight: 700, margin: 0, lineHeight: 1.05, fontSize: '1.9rem' }}>{project.title}</h3>
-                  <p style={{ color: theme.pencil, fontSize: '0.94rem', margin: '8px 0 14px' }}>{project.description}</p>
-                  <div className="tags" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                  <div className="pin absolute -top-[9px] left-6 w-4 h-4 rounded-full shadow-[0_2px_3px_rgba(0,0,0,0.25)]" style={{ background: theme.red }}></div>
+                  <div className="thumb sketchy h-[150px] mb-4 relative overflow-hidden" style={{ background: theme.paper2 }}></div>
+                  <h3 className="font-caveat font-bold m-0 leading-[1.05] text-[1.9rem]">{project.title}</h3>
+                  <p className="font-roboto text-[0.94rem] my-2 leading-relaxed" style={{ color: theme.pencil }}>{project.description}</p>
+                  <div className="tags flex flex-wrap gap-2 mt-3">
                     {project.tags.map((tag, tIndex) => (
-                      <span key={tIndex} className="tag" style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.7rem', padding: '4px 9px', border: `1.5px solid ${theme.ink}`, borderRadius: '2px 8px 2px 8px', color: theme.ink }}>
+                      <span key={tIndex} className="tag font-mono text-[0.7rem] px-2.5 py-1 rounded-[2px_8px_2px_8px]" style={{ border: `1.5px solid ${theme.ink}`, color: theme.ink }}>
                         {tag}
                       </span>
                     ))}
@@ -197,17 +189,17 @@ export function App() {
           </section>
 
           {/* HABILIDADES */}
-          <section className="section" id="habilidades" style={{ padding: '70px 0', borderTop: `2px dashed ${theme.line}` }}>
-            <div className="section-head" style={{ display: 'flex', alignItems: 'baseline', gap: '16px', marginBottom: '44px' }}>
-              <span className="num" style={{ fontFamily: 'Space Mono, monospace', color: theme.pencil, fontSize: '0.9rem' }}>03</span>
-              <h2 style={{ fontFamily: 'Caveat, cursive', fontWeight: 700, margin: 0, lineHeight: 1.05, fontSize: '2.8rem' }}>ferramentas & stacks</h2>
+          <section className="section py-[70px]" id="habilidades" style={{ borderTop: `2px dashed ${theme.line}` }}>
+            <div className="section-head flex items-baseline gap-4 mb-11">
+              <span className="num font-mono text-sm" style={{ color: theme.pencil }}>03</span>
+              <h2 className="font-caveat font-bold m-0 leading-[1.05] text-[2.8rem]">ferramentas & stacks</h2>
             </div>
-            <div className="skills-wrap" style={{ display: 'flex', flexWrap: 'wrap', gap: '16px 22px' }}>
+            <div className="skills-wrap flex flex-wrap gap-x-[22px] gap-y-4">
               {SKILLS.map((skill, index) => (
-                <div key={index} className="skill" style={{ display: 'flex', flexDirection: 'column', gap: '8px', minWidth: '150px' }}>
-                  <span className="skill-name" style={{ fontFamily: 'Architects Daughter, cursive', fontSize: '1.05rem' }}>{skill.name}</span>
-                  <div className="skill-bar" style={{ position: 'relative', height: '14px' }}>
-                    <div className="fill" style={{ position: 'absolute', top: '2px', bottom: '2px', left: '2px', background: theme.yellow, borderRadius: '1px 6px 1px 6px', width: `${skill.level}%` }}></div>
+                <div key={index} className="skill flex flex-col gap-2 min-w-[150px]">
+                  <span className="skill-name font-architects text-[1.05rem]">{skill.name}</span>
+                  <div className="skill-bar relative h-3.5">
+                    <div className="fill absolute top-0.5 bottom-0.5 left-0.5 rounded-[1px_6px_1px_6px]" style={{ background: theme.yellow, width: `${skill.level}%` }}></div>
                   </div>
                 </div>
               ))}
@@ -215,25 +207,25 @@ export function App() {
           </section>
 
           {/* CONTATO */}
-          <section className="section" id="contato" style={{ padding: '70px 0', borderTop: `2px dashed ${theme.line}` }}>
-            <div className="postcard sketchy" style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', padding: 0, overflow: 'hidden', position: 'relative' }}>
-              <div className="stamp" style={{ position: 'absolute', top: '20px', right: '20px', width: '64px', height: '76px', border: `2px dashed ${theme.pencil}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Space Mono, monospace', fontSize: '0.62rem', textAlign: 'center', color: theme.pencil, transform: 'rotate(4deg)' }}>
+          <section className="section py-[70px]" id="contato" style={{ borderTop: `2px dashed ${theme.line}` }}>
+            <div className="postcard sketchy grid grid-cols-[1.1fr_0.9fr] p-0 overflow-hidden relative">
+              <div className="stamp absolute top-5 right-5 w-16 h-[76px] flex items-center justify-center font-mono text-[0.62rem] text-center rotate-4" style={{ border: `2px dashed ${theme.pencil}`, color: theme.pencil }}>
                 commit<br />& café
               </div>
-              <div className="postcard-left" style={{ padding: '44px', borderRight: `2px dashed ${theme.line}` }}>
-                <h2 style={{ fontFamily: 'Caveat, cursive', fontWeight: 700, margin: 0, lineHeight: 1.05, fontSize: '2.6rem', marginBottom: '14px' }}>vamos construir<br />algo juntos?</h2>
-                <p style={{ color: theme.pencil, maxWidth: '38ch' }}>Escreva contando sua ideia — respondemos em até 2 dias úteis.</p>
+              <div className="postcard-left p-11" style={{ borderRight: `2px dashed ${theme.line}` }}>
+                <h2 className="font-caveat font-bold m-0 leading-[1.05] text-[2.6rem] mb-3.5">vamos construir<br />algo juntos?</h2>
+                <p className="font-roboto text-sm leading-relaxed max-w-[38ch]" style={{ color: theme.pencil }}>Escreva contando sua ideia — respondemos em até 2 dias úteis.</p>
               </div>
-              <div className="postcard-right" style={{ padding: '44px', display: 'flex', flexDirection: 'column', gap: '16px', justifyContent: 'center' }}>
-                <a className="contact-line" href={`mailto:${theme.email}`} style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: 'inherit' }}>✉ {theme.email}</a>
-                <a className="contact-line" href="#" style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: 'inherit' }}>✎ {theme.github}</a>
-                <a className="contact-line" href="#" style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: 'inherit' }}>✎ {theme.linkedin}</a>
-                <a className="contact-line" href={`tel:${theme.phone}`} style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: 'inherit' }}>☎ {theme.phone}</a>
+              <div className="postcard-right p-11 flex flex-col gap-4 justify-center">
+                <a className="contact-line font-mono text-[0.9rem] flex items-center gap-2.5 no-underline text-inherit hover:opacity-75" href={`mailto:${theme.email}`}>✉ {theme.email}</a>
+                <a className="contact-line font-mono text-[0.9rem] flex items-center gap-2.5 no-underline text-inherit hover:opacity-75" href="#">✎ {theme.github}</a>
+                <a className="contact-line font-mono text-[0.9rem] flex items-center gap-2.5 no-underline text-inherit hover:opacity-75" href="#">✎ {theme.linkedin}</a>
+                <a className="contact-line font-mono text-[0.9rem] flex items-center gap-2.5 no-underline text-inherit hover:opacity-75" href={`tel:${theme.phone}`}>☎ {theme.phone}</a>
               </div>
             </div>
           </section>
 
-          <footer style={{ textAlign: 'center', padding: '34px 0 50px', fontFamily: 'Space Mono, monospace', fontSize: '0.75rem', color: theme.pencil }}>
+          <footer className="text-center pt-[34px] pb-[50px] font-mono text-xs" style={{ color: theme.pencil }}>
             feito à mão (e com muito café) © 2026 {theme.name}
           </footer>
         </div>
