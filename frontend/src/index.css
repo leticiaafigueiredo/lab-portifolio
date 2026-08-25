@@ -1,7 +1,7 @@
-@import "tailwindcss";
-
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Architects+Daughter&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Actor&family=Archivo+Black&family=Bebas+Neue&family=Geologica:wght,CRSV@100..900,0&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Lexend:wght@100..900&family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Neucha&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Share+Tech+Mono&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&family=VT323&display=swap');
+
+@import "tailwindcss";
 
 @theme {
   --font-caveat: 'Caveat', cursive;
@@ -26,42 +26,56 @@
   --font-vt323: 'VT323', monospace;
 }
 
-:root{
-  --paper:#F6EFE1;
-  --paper-2:#EFE6D2;
-  --ink:#221F1B;
-  --pencil:#736A5C;
-  --red:#E14B32;
-  --blue:#33538E;
-  --yellow:#F4C23D;
-  --line: rgba(34,31,27,0.16);
+:root {
+  --paper: #F6EFE1;
+  --paper-2: #EFE6D2;
+  --ink: #221F1B;
+  --pencil: #736A5C;
+  --red: #E14B32;
+  --blue: #33538E;
+  --yellow: #F4C23D;
+  --line: rgba(34, 31, 27, 0.16);
 }
 
-html{ scroll-behavior:smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
-body{
-  margin:0;
-  background-color:var(--paper);
-  background-image: radial-gradient(rgba(34,31,27,0.035) 1px, transparent 1px);
+body {
+  margin: 0;
+  background-color: var(--paper);
+  background-image: radial-gradient(rgba(34, 31, 27, 0.035) 1px, transparent 1px);
   background-size: 6px 6px;
-  color:var(--ink);
+  color: var(--ink);
   font-family: var(--font-space-grotesk);
-  line-height:1.5;
-  overflow-x:hidden;
+  line-height: 1.5;
+  overflow-x: hidden;
 }
 
-::selection{ background:var(--yellow); }
-
-/* Borda rabiscada idêntica ao design original */
-.sketchy{
-  position:relative;
+::selection {
+  background: var(--yellow);
 }
-.sketchy::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  border:2px solid var(--ink);
-  border-radius:3px 14px 4px 12px / 12px 4px 14px 3px;
-  filter:url(#roughen);
-  pointer-events:none;
+
+/* Borda rabiscada com filtro SVG orgânico */
+.sketchy {
+  position: relative;
+}
+
+.sketchy::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--ink);
+  border-radius: 3px 14px 4px 12px / 12px 4px 14px 3px;
+  filter: url(#roughen);
+  pointer-events: none;
+}
+
+/* Utility to hide scrollbar in category lists */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
