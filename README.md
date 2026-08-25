@@ -77,7 +77,12 @@ O projeto conta com uma experiência imersiva de **Perfil Duplo**, permitindo al
 - Sons táteis e orgânicos para folhear páginas, cliques de caneta, rabiscos e celebrações.
 - Controle global de áudio acessível na barra de navegação (botão mute/unmute).
 
-### 6. 📱 Responsividade Total & Detalhes Visuais
+### 6. 🌐 Suporte Bilíngue Completo (Português / Inglês)
+- Alternância instantânea de idioma (`PT` / `EN`) via botão de ação na barra de navegação e menu mobile.
+- Tradução integral de dados biográficos, projetos, linhas do tempo, categorias, habilidades, formulários, modais e notificações toast.
+- Persistência da preferência de idioma no `localStorage` do navegador.
+
+### 7. 📱 Responsividade Total & Detalhes Visuais
 - Filtros SVG nativos (`#roughen`) para bordas rugosas e texturas imperfeitas como papel real.
 - Tipografia artesanal (Google Fonts) combinada com fontes monoespaçadas técnicas.
 - Layout 100% responsivo para smartphones, tablets e desktops com menu drawer retrátil.
@@ -167,7 +172,14 @@ lab-portifolio/
    npm install
    ```
 
-3. **Inicie o servidor de desenvolvimento:**
+3. **Configure as Variáveis de Ambiente (Opcional para envio de e-mails reais):**
+   ```bash
+   cp .env.example .env
+   ```
+   > [!TIP]
+   > Para receber mensagens do formulário de contato diretamente na sua caixa de entrada, crie uma chave gratuita no [Web3Forms](https://web3forms.com) (leva 10 segundos) e insira em `VITE_WEB3FORMS_ACCESS_KEY` dentro do `.env`.
+
+4. **Inicie o servidor de desenvolvimento:**
    ```bash
    npm run dev
    ```

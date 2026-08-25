@@ -45,7 +45,7 @@ export const PROFILES_I18N: Record<Language, Record<ProfileId, ProfileData>> = {
         badgeBg: '#F4C23D',
       },
       contact: {
-        email: 'murilofreitas.dev@gmail.com',
+        email: 'onemurilo@gmail.com',
         phone: '+55 (31) 99988-7766',
         github: 'github.com/murilofreitas',
         githubUrl: 'https://github.com',
@@ -581,7 +581,7 @@ export const PROFILES_I18N: Record<Language, Record<ProfileId, ProfileData>> = {
         badgeBg: '#F4C23D',
       },
       contact: {
-        email: 'murilofreitas.dev@gmail.com',
+        email: 'onemurilo@gmail.com',
         phone: '+55 (31) 99988-7766',
         github: 'github.com/murilofreitas',
         githubUrl: 'https://github.com',

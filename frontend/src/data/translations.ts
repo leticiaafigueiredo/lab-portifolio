@@ -107,6 +107,10 @@ export interface Translations {
     whatsappTitle: string;
     toastCopied: (label: string) => string;
     toastValidation: string;
+    emailInvalid: string;
+    emailError: string;
+    activationNotice: (email: string) => string;
+    fallbackMailto: string;
     toastSuccess: (name: string) => string;
     statusPrefix: string;
     statusSuffix: string;
@@ -233,6 +237,10 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       whatsappTitle: 'Conversar no WhatsApp',
       toastCopied: (label: string) => `${label} copiado para a área de transferência! 📋`,
       toastValidation: 'Por favor, preencha nome, e-mail e mensagem! ✏️',
+      emailInvalid: 'Por favor, insira um endereço de e-mail válido! ✉️',
+      emailError: 'Erro ao enviar a mensagem. Tente novamente ou use o e-mail direto abaixo.',
+      activationNotice: (email: string) => `O serviço de envio enviou um e-mail de ativação para ${email}. Basta clicar em 'Activate Form' nele para liberar o recebimento!`,
+      fallbackMailto: 'Abrir no app de e-mail ↗',
       toastSuccess: (name: string) => `Mensagem enviada com sucesso para ${name}! Responderemos em breve. ✉️`,
       statusPrefix: 'Status:',
       statusSuffix: 'Respostas rápidas e propostas sem compromisso.',
@@ -357,6 +365,10 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       whatsappTitle: 'Chat on WhatsApp',
       toastCopied: (label: string) => `${label} copied to clipboard! 📋`,
       toastValidation: 'Please fill in your name, email, and message! ✏️',
+      emailInvalid: 'Please enter a valid e-mail address! ✉️',
+      emailError: 'Error sending message. Please try again or reach out directly below.',
+      activationNotice: (email: string) => `An activation email was sent to ${email}. Just click 'Activate Form' to start receiving messages directly!`,
+      fallbackMailto: 'Open in email app ↗',
       toastSuccess: (name: string) => `Message sent successfully to ${name}! We will reply shortly. ✉️`,
       statusPrefix: 'Status:',
       statusSuffix: 'Fast responses and no-commitment inquiries.',

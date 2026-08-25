@@ -1,11 +1,12 @@
 import React, { useRef, useState } from 'react';
-import { Mail, Phone, Send, Copy, Check, MessageSquare } from 'lucide-react';
+import { Mail, Phone, Send, Copy, Check, MessageSquare, Loader2, AlertCircle, ExternalLink } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import type { ProfileData } from '../types';
 import type { Translations } from '../data/translations';
 import { GithubIcon, LinkedinIcon } from './Icons';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { soundManager } from '../utils/soundEffects';
+import { sendContactEmail } from '../services/emailService';
 
 interface ContactProps {
   profile: ProfileData;
@@ -27,6 +28,7 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast, t }) => {
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleCopy = (text: string, label: string) => {
     soundManager.playPop();
@@ -36,31 +38,70 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast, t }) => {
     setTimeout(() => setCopiedField(null), 2500);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) {
+    setErrorMessage(null);
+
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedMessage = formData.message.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedMessage) {
       onToast(t.toastValidation);
+      return;
+    }
+
+    // Validação básica de formato de e-mail
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      onToast(t.emailInvalid);
       return;
     }
 
     setIsSubmitting(true);
     soundManager.playPaperRustle();
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitted(true);
-      soundManager.playPop();
-
-      confetti({
-        particleCount: 80,
-        spread: 60,
-        origin: { y: 0.7 },
-        colors: [profile.theme.yellow, profile.theme.red, profile.theme.blue, '#221F1B'],
+    try {
+      const result = await sendContactEmail({
+        name: trimmedName,
+        email: trimmedEmail,
+        subject: formData.subject.trim(),
+        message: trimmedMessage,
+        targetProfileName: profile.fullName,
+        targetEmail: profile.contact.email,
       });
 
-      onToast(t.toastSuccess(profile.name));
-    }, 600);
+      if (result.success) {
+        setSubmitted(true);
+        soundManager.playPop();
+
+        confetti({
+          particleCount: 90,
+          spread: 65,
+          origin: { y: 0.7 },
+          colors: [profile.theme.yellow, profile.theme.red, profile.theme.blue, '#221F1B'],
+        });
+
+        if (result.needsActivation) {
+          onToast(t.activationNotice(profile.contact.email));
+        } else {
+          onToast(t.toastSuccess(profile.name));
+        }
+      } else {
+        setErrorMessage(result.message || t.emailError);
+        onToast(result.message || t.emailError);
+      }
+    } catch {
+      setErrorMessage(t.emailError);
+      onToast(t.emailError);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  const mailtoFallbackUrl = `mailto:${profile.contact.email}?subject=${encodeURIComponent(
+    formData.subject || `Contato de ${formData.name || 'Visitante'}`
+  )}&body=${encodeURIComponent(formData.message || '')}`;
 
   return (
     <section
@@ -115,6 +156,31 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast, t }) => {
               {t.formSubtitle}
             </p>
 
+            {/* Alerta de erro com fallback mailto se falhar */}
+            {errorMessage && (
+              <div
+                className="p-3.5 mb-5 rounded-xs border flex items-start gap-2.5 text-xs font-mono"
+                style={{
+                  backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                  borderColor: '#ef4444',
+                  color: '#991b1b',
+                }}
+              >
+                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <p className="m-0 font-bold">{errorMessage}</p>
+                  <a
+                    href={mailtoFallbackUrl}
+                    className="inline-flex items-center gap-1 mt-1.5 underline font-bold"
+                    style={{ color: profile.theme.blue }}
+                  >
+                    <span>{t.fallbackMailto}</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+            )}
+
             {submitted ? (
               <div
                 className="p-6 rounded-xs border-2 text-center my-6"
@@ -133,9 +199,10 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast, t }) => {
                 <button
                   onClick={() => {
                     setSubmitted(false);
+                    setErrorMessage(null);
                     setFormData({ name: '', email: '', subject: '', message: '' });
                   }}
-                  className="mt-4 font-mono text-xs underline cursor-pointer"
+                  className="mt-4 font-mono text-xs underline cursor-pointer font-bold"
                   style={{ color: profile.theme.blue }}
                 >
                   {t.sendAnother}
@@ -154,7 +221,8 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast, t }) => {
                       placeholder={t.namePlaceholder}
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full p-2.5 rounded-xs border font-roboto text-sm outline-none transition-colors"
+                      disabled={isSubmitting}
+                      className="w-full p-2.5 rounded-xs border font-roboto text-sm outline-none transition-colors disabled:opacity-50"
                       style={{
                         backgroundColor: profile.theme.paper,
                         borderColor: profile.theme.ink,
@@ -173,7 +241,8 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast, t }) => {
                       placeholder={t.emailPlaceholder}
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full p-2.5 rounded-xs border font-roboto text-sm outline-none transition-colors"
+                      disabled={isSubmitting}
+                      className="w-full p-2.5 rounded-xs border font-roboto text-sm outline-none transition-colors disabled:opacity-50"
                       style={{
                         backgroundColor: profile.theme.paper,
                         borderColor: profile.theme.ink,
@@ -192,7 +261,8 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast, t }) => {
                     placeholder={t.subjectPlaceholder}
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    className="w-full p-2.5 rounded-xs border font-roboto text-sm outline-none transition-colors"
+                    disabled={isSubmitting}
+                    className="w-full p-2.5 rounded-xs border font-roboto text-sm outline-none transition-colors disabled:opacity-50"
                     style={{
                       backgroundColor: profile.theme.paper,
                       borderColor: profile.theme.ink,
@@ -211,7 +281,8 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast, t }) => {
                     placeholder={t.messagePlaceholder}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full p-2.5 rounded-xs border font-roboto text-sm outline-none transition-colors resize-y"
+                    disabled={isSubmitting}
+                    className="w-full p-2.5 rounded-xs border font-roboto text-sm outline-none transition-colors resize-y disabled:opacity-50"
                     style={{
                       backgroundColor: profile.theme.paper,
                       borderColor: profile.theme.ink,
@@ -223,15 +294,24 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast, t }) => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="sketchy px-6 py-3 font-mono text-xs font-bold cursor-pointer transition-all active:scale-95 inline-flex items-center gap-2"
+                  className="sketchy px-6 py-3 font-mono text-xs font-bold cursor-pointer transition-all active:scale-95 inline-flex items-center gap-2 disabled:opacity-60"
                   style={{
                     backgroundColor: profile.theme.ink,
                     color: profile.theme.paper,
                     border: `2px solid ${profile.theme.ink}`,
                   }}
                 >
-                  <Send className="w-4 h-4" />
-                  <span>{isSubmitting ? t.sending : t.submitButton}</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>{t.sending}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>{t.submitButton}</span>
+                    </>
+                  )}
                 </button>
               </form>
             )}
