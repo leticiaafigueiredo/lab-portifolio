@@ -1,12 +1,14 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { Trash2, Download, RotateCcw, Sparkles, PenTool, Highlighter, Eraser } from 'lucide-react';
 import type { ProfileData } from '../types';
+import type { Translations } from '../data/translations';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { soundManager } from '../utils/soundEffects';
 
 interface DoodlePadProps {
   profile: ProfileData;
   onToast: (msg: string) => void;
+  t: Translations['doodlePad'];
 }
 
 interface Point {
@@ -21,7 +23,7 @@ interface Stroke {
   isHighlighter?: boolean;
 }
 
-export const DoodlePad: React.FC<DoodlePadProps> = ({ profile, onToast }) => {
+export const DoodlePad: React.FC<DoodlePadProps> = ({ profile, onToast, t }) => {
   const sectionRef = useRef<HTMLElement>(null);
   useScrollReveal(sectionRef);
 
@@ -34,11 +36,11 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ profile, onToast }) => {
   const [currentStroke, setCurrentStroke] = useState<Stroke | null>(null);
 
   const colorPresets = [
-    { label: 'Nanquim', value: '#221F1B' },
-    { label: 'Vermelho', value: profile.theme.red },
-    { label: 'Azul', value: profile.theme.blue },
-    { label: 'Amarelo', value: '#F4C23D' },
-    { label: 'Grafite', value: '#736A5C' },
+    { label: t.colors.ink, value: '#221F1B' },
+    { label: t.colors.red, value: profile.theme.red },
+    { label: t.colors.blue, value: profile.theme.blue },
+    { label: t.colors.yellow, value: '#F4C23D' },
+    { label: t.colors.graphite, value: '#736A5C' },
   ];
 
   // Redesenhar canvas sempre que strokes mudarem
@@ -169,7 +171,7 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ profile, onToast }) => {
     soundManager.playPaperRustle();
     setStrokes([]);
     redraw([]);
-    onToast('Caderno de rabiscos limpo com sucesso! 📄');
+    onToast(t.toastCleared);
   };
 
   const handleDownload = () => {
@@ -189,14 +191,14 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ profile, onToast }) => {
     // Carimbo no canto inferior direito
     ctx.font = '12px monospace';
     ctx.fillStyle = profile.theme.pencil;
-    ctx.fillText(`Rabiscos @ ${profile.fullName} // 2026`, 65, canvas.height - 15);
+    ctx.fillText(t.canvasStamp(profile.fullName), 65, canvas.height - 15);
 
     const dataUrl = tempCanvas.toDataURL('image/png');
     const link = document.createElement('a');
-    link.download = `rabisco-${profile.id}-${Date.now()}.png`;
+    link.download = `sketch-${profile.id}-${Date.now()}.png`;
     link.href = dataUrl;
     link.click();
-    onToast('Rascunho baixado com sucesso! 🎨');
+    onToast(t.toastDownloaded);
   };
 
   return (
@@ -210,16 +212,16 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ profile, onToast }) => {
       <div className="flex flex-wrap items-baseline justify-between gap-4 mb-8">
         <div className="flex items-baseline gap-4">
           <span className="font-mono text-sm font-bold" style={{ color: profile.theme.pencil }}>
-            04 //
+            {t.sectionNum}
           </span>
           <h2 className="font-caveat font-bold m-0 leading-tight text-4xl sm:text-5xl" style={{ color: profile.theme.ink }}>
-            bloco de rascunhos interativo
+            {t.sectionTitle}
           </h2>
         </div>
 
         <span className="font-mono text-xs opacity-75 flex items-center gap-1.5" style={{ color: profile.theme.pencil }}>
           <Sparkles className="w-3.5 h-3.5" style={{ color: profile.theme.red }} />
-          Deixe um recado, autógrafo ou rabisco livre!
+          {t.sectionSubtitle}
         </span>
       </div>
 
@@ -254,10 +256,10 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ profile, onToast }) => {
                 color: activeTool === 'pen' ? profile.theme.paper : profile.theme.ink,
                 borderColor: profile.theme.ink,
               }}
-              title="Caneta Nanquim"
+              title={t.pen}
             >
               <PenTool className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Caneta</span>
+              <span className="hidden sm:inline">{t.pen}</span>
             </button>
 
             <button
@@ -273,10 +275,10 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ profile, onToast }) => {
                 color: '#221F1B',
                 borderColor: profile.theme.ink,
               }}
-              title="Marca-Texto Amarelo"
+              title={t.highlighter}
             >
               <Highlighter className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Marca-Texto</span>
+              <span className="hidden sm:inline">{t.highlighter}</span>
             </button>
 
             <button
@@ -292,10 +294,10 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ profile, onToast }) => {
                 color: activeTool === 'eraser' ? profile.theme.paper : profile.theme.ink,
                 borderColor: profile.theme.ink,
               }}
-              title="Borracha"
+              title={t.eraser}
             >
               <Eraser className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Borracha</span>
+              <span className="hidden sm:inline">{t.eraser}</span>
             </button>
           </div>
 
@@ -332,7 +334,7 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ profile, onToast }) => {
                 borderColor: profile.theme.ink,
                 color: profile.theme.ink,
               }}
-              title="Desfazer último traço"
+              title={t.undoTitle}
             >
               <RotateCcw className="w-3.5 h-3.5" />
             </button>
@@ -346,7 +348,7 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ profile, onToast }) => {
                 borderColor: profile.theme.ink,
                 color: profile.theme.ink,
               }}
-              title="Limpar tudo"
+              title={t.clearTitle}
             >
               <Trash2 className="w-3.5 h-3.5" />
             </button>
@@ -359,10 +361,10 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ profile, onToast }) => {
                 color: profile.theme.paper,
                 border: `1.5px solid ${profile.theme.ink}`,
               }}
-              title="Baixar imagem do rabisco"
+              title={t.saveDrawing}
             >
               <Download className="w-3.5 h-3.5" />
-              <span>Salvar Desenho</span>
+              <span>{t.saveDrawing}</span>
             </button>
           </div>
         </div>
@@ -391,7 +393,7 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ profile, onToast }) => {
           {/* Dica inicial se estiver vazio */}
           {strokes.length === 0 && !isDrawing && (
             <div className="absolute inset-0 pointer-events-none flex items-center justify-center font-architects text-lg opacity-35" style={{ color: profile.theme.pencil }}>
-              ✏️ Desenhe algo aqui com o mouse ou o dedo...
+              {t.placeholder}
             </div>
           )}
         </div>

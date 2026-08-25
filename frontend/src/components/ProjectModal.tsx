@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, CheckCircle, Cpu, BarChart3, Layers } from 'lucide-react';
 import type { Project, ProfileTheme } from '../types';
+import type { Translations } from '../data/translations';
 import { GithubIcon } from './Icons';
 import { soundManager } from '../utils/soundEffects';
 
@@ -9,9 +10,10 @@ interface ProjectModalProps {
   project: Project | null;
   onClose: () => void;
   theme: ProfileTheme;
+  t: Translations['projectModal'];
 }
 
-export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, theme }) => {
+export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, theme, t }) => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -92,7 +94,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
                   className="font-mono text-[0.7rem] uppercase tracking-wider px-2 py-0.5 rounded-sm"
                   style={{ border: `1px dashed ${theme.red}`, color: theme.red }}
                 >
-                  ★ Destaque
+                  {t.featured}
                 </span>
               )}
             </div>
@@ -121,7 +123,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
           {project.metrics && project.metrics.length > 0 && (
             <div className="mb-6">
               <h3 className="font-mono text-xs uppercase tracking-widest font-bold mb-3 flex items-center gap-2" style={{ color: theme.pencil }}>
-                <BarChart3 className="w-4 h-4" /> Resultados & Impacto
+                <BarChart3 className="w-4 h-4" /> {t.impactTitle}
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {project.metrics.map((metric, idx) => (
@@ -149,7 +151,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
           {project.highlights && project.highlights.length > 0 && (
             <div className="mb-6">
               <h3 className="font-mono text-xs uppercase tracking-widest font-bold mb-3 flex items-center gap-2" style={{ color: theme.pencil }}>
-                <CheckCircle className="w-4 h-4" /> Destaques da Implementação
+                <CheckCircle className="w-4 h-4" /> {t.highlightsTitle}
               </h3>
               <ul className="space-y-2 list-none p-0 m-0">
                 {project.highlights.map((item, idx) => (
@@ -166,7 +168,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
           {project.architecture && (
             <div className="mb-6">
               <h3 className="font-mono text-xs uppercase tracking-widest font-bold mb-2 flex items-center gap-2" style={{ color: theme.pencil }}>
-                <Cpu className="w-4 h-4" /> Arquitetura & Fluxo
+                <Cpu className="w-4 h-4" /> {t.architectureTitle}
               </h3>
               <div
                 className="p-3 font-mono text-xs leading-relaxed border rounded-sm"
@@ -184,7 +186,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
           {/* Tecnologias Utilizadas */}
           <div className="mb-7">
             <h3 className="font-mono text-xs uppercase tracking-widest font-bold mb-3 flex items-center gap-2" style={{ color: theme.pencil }}>
-              <Layers className="w-4 h-4" /> Tecnologias Utilizadas
+              <Layers className="w-4 h-4" /> {t.techTitle}
             </h3>
             <div className="flex flex-wrap gap-2">
               {project.tags.map((tag, idx) => (
@@ -218,7 +220,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
                   }}
                   onClick={() => soundManager.playClick()}
                 >
-                  <ExternalLink className="w-4 h-4" /> Ver Projeto Online
+                  <ExternalLink className="w-4 h-4" /> {t.viewLive}
                 </a>
               )}
               {project.githubUrl && (
@@ -234,7 +236,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
                   }}
                   onClick={() => soundManager.playClick()}
                 >
-                  <GithubIcon size={16} /> Código / Repositório
+                  <GithubIcon size={16} /> {t.viewCode}
                 </a>
               )}
             </div>
@@ -247,7 +249,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
               className="font-mono text-xs cursor-pointer px-3 py-2 opacity-75 hover:opacity-100 underline"
               style={{ color: theme.pencil }}
             >
-              Fechar rascunho ✕
+              {t.closeSketch}
             </button>
           </div>
         </motion.div>

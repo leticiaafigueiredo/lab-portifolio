@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, ArrowUpRight, Sparkles, Filter } from 'lucide-react';
 import type { ProfileData, Project } from '../types';
+import type { Translations } from '../data/translations';
 import { GithubIcon } from './Icons';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { soundManager } from '../utils/soundEffects';
@@ -9,16 +10,22 @@ import { soundManager } from '../utils/soundEffects';
 interface ProjectsProps {
   profile: ProfileData;
   onSelectProject: (project: Project) => void;
+  t: Translations['projects'];
 }
 
-export const Projects: React.FC<ProjectsProps> = ({ profile, onSelectProject }) => {
+export const Projects: React.FC<ProjectsProps> = ({ profile, onSelectProject, t }) => {
   const sectionRef = useRef<HTMLElement>(null);
   useScrollReveal(sectionRef);
 
-  const [activeCategory, setActiveCategory] = useState<string>('Todos');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const defaultCategory = profile.projectCategories[0] || 'Todos';
+  const activeCategory = (selectedCategory && profile.projectCategories.includes(selectedCategory))
+    ? selectedCategory
+    : defaultCategory;
 
   const filteredProjects = profile.projects.filter((project) => {
-    if (activeCategory === 'Todos') return true;
+    if (activeCategory === defaultCategory || activeCategory === 'Todos' || activeCategory === 'All') return true;
     return project.category === activeCategory;
   });
 
@@ -33,15 +40,15 @@ export const Projects: React.FC<ProjectsProps> = ({ profile, onSelectProject }) 
       <div className="flex flex-wrap items-baseline justify-between gap-4 mb-8">
         <div className="flex items-baseline gap-4">
           <span className="font-mono text-sm font-bold" style={{ color: profile.theme.pencil }}>
-            02 //
+            {t.sectionNum}
           </span>
           <h2 className="font-caveat font-bold m-0 leading-tight text-4xl sm:text-5xl" style={{ color: profile.theme.ink }}>
-            trabalhos & projetos
+            {t.sectionTitle}
           </h2>
         </div>
 
         <span className="font-mono text-xs opacity-75" style={{ color: profile.theme.pencil }}>
-          Mostrando {filteredProjects.length} de {profile.projects.length} registros
+          {t.showingCount(filteredProjects.length, profile.projects.length)}
         </span>
       </div>
 
@@ -55,7 +62,7 @@ export const Projects: React.FC<ProjectsProps> = ({ profile, onSelectProject }) 
               key={category}
               onClick={() => {
                 soundManager.playClick();
-                setActiveCategory(category);
+                setSelectedCategory(category);
               }}
               className="sketchy px-3.5 py-1.5 font-mono text-xs font-bold cursor-pointer shrink-0 transition-all duration-200 active:scale-95"
               style={{
@@ -117,7 +124,7 @@ export const Projects: React.FC<ProjectsProps> = ({ profile, onSelectProject }) 
 
                     {project.featured && (
                       <span className="font-mono text-[0.68rem] font-bold flex items-center gap-1" style={{ color: profile.theme.red }}>
-                        <Sparkles className="w-3 h-3" /> Destaque
+                        <Sparkles className="w-3 h-3" /> {t.featured}
                       </span>
                     )}
                   </div>
@@ -179,7 +186,7 @@ export const Projects: React.FC<ProjectsProps> = ({ profile, onSelectProject }) 
                       border: '1.5px solid #221F1B',
                     }}
                   >
-                    <span>Ver detalhes</span>
+                    <span>{t.viewDetails}</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </button>
 
@@ -192,7 +199,7 @@ export const Projects: React.FC<ProjectsProps> = ({ profile, onSelectProject }) 
                         onClick={() => soundManager.playClick()}
                         className="p-1.5 rounded-sm hover:opacity-75 transition-opacity"
                         style={{ color: profile.theme.ink }}
-                        title="Código no GitHub"
+                        title={t.githubTitle}
                       >
                         <GithubIcon size={16} />
                       </a>
@@ -205,7 +212,7 @@ export const Projects: React.FC<ProjectsProps> = ({ profile, onSelectProject }) 
                         onClick={() => soundManager.playClick()}
                         className="p-1.5 rounded-sm hover:opacity-75 transition-opacity"
                         style={{ color: profile.theme.ink }}
-                        title="Demonstração Online"
+                        title={t.liveTitle}
                       >
                         <ExternalLink className="w-4 h-4" />
                       </a>

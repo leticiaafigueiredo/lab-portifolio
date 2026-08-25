@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Mail, Phone, Send, Copy, Check, MessageSquare } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import type { ProfileData } from '../types';
+import type { Translations } from '../data/translations';
 import { GithubIcon, LinkedinIcon } from './Icons';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { soundManager } from '../utils/soundEffects';
@@ -9,9 +10,10 @@ import { soundManager } from '../utils/soundEffects';
 interface ContactProps {
   profile: ProfileData;
   onToast: (msg: string) => void;
+  t: Translations['contact'];
 }
 
-export const Contact: React.FC<ContactProps> = ({ profile, onToast }) => {
+export const Contact: React.FC<ContactProps> = ({ profile, onToast, t }) => {
   const sectionRef = useRef<HTMLElement>(null);
   useScrollReveal(sectionRef);
 
@@ -30,14 +32,14 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast }) => {
     soundManager.playPop();
     navigator.clipboard.writeText(text);
     setCopiedField(label);
-    onToast(`${label} copiado para a área de transferência! 📋`);
+    onToast(t.toastCopied(label));
     setTimeout(() => setCopiedField(null), 2500);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) {
-      onToast('Por favor, preencha nome, e-mail e mensagem! ✏️');
+      onToast(t.toastValidation);
       return;
     }
 
@@ -56,7 +58,7 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast }) => {
         colors: [profile.theme.yellow, profile.theme.red, profile.theme.blue, '#221F1B'],
       });
 
-      onToast(`Mensagem enviada com sucesso para ${profile.name}! Responderemos em breve. ✉️`);
+      onToast(t.toastSuccess(profile.name));
     }, 600);
   };
 
@@ -70,10 +72,10 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast }) => {
       {/* Cabeçalho da Seção */}
       <div className="flex items-baseline gap-4 mb-10">
         <span className="font-mono text-sm font-bold" style={{ color: profile.theme.pencil }}>
-          05 //
+          {t.sectionNum}
         </span>
         <h2 className="font-caveat font-bold m-0 leading-tight text-4xl sm:text-5xl" style={{ color: profile.theme.ink }}>
-          correio & contato
+          {t.sectionTitle}
         </h2>
       </div>
 
@@ -95,9 +97,9 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast }) => {
             color: profile.theme.pencil,
           }}
         >
-          <span className="font-bold text-[0.7rem] uppercase">LAB // 2026</span>
+          <span className="font-bold text-[0.7rem] uppercase">{t.stampTitle}</span>
           <span className="text-base my-0.5">☕</span>
-          <span className="opacity-70">commit & café</span>
+          <span className="opacity-70">{t.stampSubtitle}</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12">
@@ -107,10 +109,10 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast }) => {
             style={{ borderColor: profile.theme.line }}
           >
             <h3 className="font-caveat font-bold text-3xl sm:text-4xl m-0 mb-2" style={{ color: profile.theme.ink }}>
-              vamos construir algo juntos?
+              {t.formTitle}
             </h3>
             <p className="font-roboto text-sm leading-relaxed max-w-[44ch] mb-6" style={{ color: profile.theme.pencil }}>
-              Escreva contando sua ideia, projeto ou dúvida — mesmo que ainda seja um rascunho de guardanapo. Respondo em até 24h úteis!
+              {t.formSubtitle}
             </p>
 
             {submitted ? (
@@ -123,10 +125,10 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast }) => {
               >
                 <span className="text-3xl block mb-2">🎉</span>
                 <h4 className="font-caveat font-bold text-2xl m-0" style={{ color: profile.theme.ink }}>
-                  Mensagem anotada com carinho!
+                  {t.formSuccessTitle}
                 </h4>
                 <p className="font-architects text-sm mt-2" style={{ color: profile.theme.pencil }}>
-                  Obrigado pelo contato, {formData.name}. Entrarei em contato pelo e-mail {formData.email}.
+                  {t.formSuccessSubtitle(formData.name, formData.email)}
                 </p>
                 <button
                   onClick={() => {
@@ -136,7 +138,7 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast }) => {
                   className="mt-4 font-mono text-xs underline cursor-pointer"
                   style={{ color: profile.theme.blue }}
                 >
-                  Enviar outra mensagem
+                  {t.sendAnother}
                 </button>
               </div>
             ) : (
@@ -144,12 +146,12 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block font-bold mb-1 opacity-75" style={{ color: profile.theme.ink }}>
-                      Seu Nome *
+                      {t.nameLabel}
                     </label>
                     <input
                       type="text"
                       required
-                      placeholder="Ex: Maria Silva"
+                      placeholder={t.namePlaceholder}
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className="w-full p-2.5 rounded-xs border font-roboto text-sm outline-none transition-colors"
@@ -163,12 +165,12 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast }) => {
 
                   <div>
                     <label className="block font-bold mb-1 opacity-75" style={{ color: profile.theme.ink }}>
-                      Seu E-mail *
+                      {t.emailLabel}
                     </label>
                     <input
                       type="email"
                       required
-                      placeholder="maria@empresa.com"
+                      placeholder={t.emailPlaceholder}
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className="w-full p-2.5 rounded-xs border font-roboto text-sm outline-none transition-colors"
@@ -183,11 +185,11 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast }) => {
 
                 <div>
                   <label className="block font-bold mb-1 opacity-75" style={{ color: profile.theme.ink }}>
-                    Assunto
+                    {t.subjectLabel}
                   </label>
                   <input
                     type="text"
-                    placeholder="Ex: Projeto novo, Consultoria, Oportunidade..."
+                    placeholder={t.subjectPlaceholder}
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     className="w-full p-2.5 rounded-xs border font-roboto text-sm outline-none transition-colors"
@@ -201,12 +203,12 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast }) => {
 
                 <div>
                   <label className="block font-bold mb-1 opacity-75" style={{ color: profile.theme.ink }}>
-                    Mensagem / Ideia *
+                    {t.messageLabel}
                   </label>
                   <textarea
                     rows={4}
                     required
-                    placeholder="Conte sobre o projeto, escopo ou prazos estimados..."
+                    placeholder={t.messagePlaceholder}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className="w-full p-2.5 rounded-xs border font-roboto text-sm outline-none transition-colors resize-y"
@@ -229,7 +231,7 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast }) => {
                   }}
                 >
                   <Send className="w-4 h-4" />
-                  <span>{isSubmitting ? 'Enviando...' : 'Enviar Cartão Postal ✉'}</span>
+                  <span>{isSubmitting ? t.sending : t.submitButton}</span>
                 </button>
               </form>
             )}
@@ -239,7 +241,7 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast }) => {
           <div className="lg:col-span-5 p-6 sm:p-10 flex flex-col justify-between">
             <div>
               <span className="font-mono text-xs uppercase tracking-widest font-bold block mb-4" style={{ color: profile.theme.pencil }}>
-                ✎ canais diretos
+                {t.directChannelsTitle}
               </span>
 
               <div className="space-y-4 font-mono text-xs">
@@ -258,7 +260,7 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast }) => {
                   <button
                     onClick={() => handleCopy(profile.contact.email, 'E-mail')}
                     className="p-1.5 rounded-xs hover:bg-black/10 transition-colors cursor-pointer shrink-0"
-                    title="Copiar e-mail"
+                    title={t.copyEmailTitle}
                   >
                     {copiedField === 'E-mail' ? <Check className="w-3.5 h-3.5 text-green-600" /> : <Copy className="w-3.5 h-3.5 opacity-60" />}
                   </button>
@@ -282,7 +284,7 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast }) => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-1.5 rounded-xs hover:bg-black/10 transition-colors no-underline text-inherit"
-                      title="Conversar no WhatsApp"
+                      title={t.whatsappTitle}
                       onClick={() => soundManager.playClick()}
                     >
                       <MessageSquare className="w-3.5 h-3.5 text-green-600" />
@@ -290,7 +292,7 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast }) => {
                     <button
                       onClick={() => handleCopy(profile.contact.phone, 'Telefone')}
                       className="p-1.5 rounded-xs hover:bg-black/10 transition-colors cursor-pointer"
-                      title="Copiar telefone"
+                      title={t.copyPhoneTitle}
                     >
                       {copiedField === 'Telefone' ? <Check className="w-3.5 h-3.5 text-green-600" /> : <Copy className="w-3.5 h-3.5 opacity-60" />}
                     </button>
@@ -346,7 +348,7 @@ export const Contact: React.FC<ContactProps> = ({ profile, onToast }) => {
                 color: profile.theme.pencil,
               }}
             >
-              🟢 <strong>Status:</strong> {profile.status}. Respostas rápidas e propostas sem compromisso.
+              🟢 <strong>{t.statusPrefix}</strong> {profile.status}. {t.statusSuffix}
             </div>
           </div>
         </div>

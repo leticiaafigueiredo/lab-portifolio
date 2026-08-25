@@ -2,17 +2,21 @@ import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown, Mail, Download, Sparkles } from 'lucide-react';
 import type { ProfileData } from '../types';
+import type { Translations } from '../data/translations';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { soundManager } from '../utils/soundEffects';
 
 interface HeroProps {
   profile: ProfileData;
   onToggleUser: () => void;
+  t: Translations['hero'];
 }
 
-export const Hero: React.FC<HeroProps> = ({ profile, onToggleUser }) => {
+export const Hero: React.FC<HeroProps> = ({ profile, onToggleUser, t }) => {
   const heroRef = useRef<HTMLElement>(null);
   useScrollReveal(heroRef);
+
+  const targetName = profile.id === 'murilo' ? 'Letícia' : 'Murilo';
 
   return (
     <section
@@ -55,7 +59,7 @@ export const Hero: React.FC<HeroProps> = ({ profile, onToggleUser }) => {
           className="font-caveat font-bold leading-[1.05] text-[3.6rem] sm:text-[4.8rem] md:text-[5.4rem] m-0 mb-2"
           style={{ color: profile.theme.ink }}
         >
-          Oi, eu sou<br />
+          {t.greeting}<br />
           <span className="relative inline-block px-3 pb-1">
             {profile.name}
             {/* SVG de elipse desenhada à mão contornando o nome */}
@@ -104,7 +108,7 @@ export const Hero: React.FC<HeroProps> = ({ profile, onToggleUser }) => {
               border: `2px solid ${profile.theme.ink}`,
             }}
           >
-            <span>ver trabalhos</span>
+            <span>{t.viewWorks}</span>
             <ArrowDown className="w-4 h-4" />
           </a>
 
@@ -119,17 +123,17 @@ export const Hero: React.FC<HeroProps> = ({ profile, onToggleUser }) => {
             }}
           >
             <Mail className="w-4 h-4" />
-            <span>bater um papo</span>
+            <span>{t.letsTalk}</span>
           </a>
 
           <a
-            href={`mailto:${profile.contact.email}?subject=Contato%20via%20Portfolio`}
+            href={`mailto:${profile.contact.email}?subject=${encodeURIComponent(t.resumeMailSubject)}`}
             onClick={() => soundManager.playClick()}
             className="font-mono text-xs flex items-center gap-1.5 opacity-75 hover:opacity-100 transition-opacity underline cursor-pointer"
             style={{ color: profile.theme.pencil }}
           >
             <Download className="w-3.5 h-3.5" />
-            <span>solicitar currículo</span>
+            <span>{t.requestResume}</span>
           </a>
         </div>
 
@@ -186,7 +190,7 @@ export const Hero: React.FC<HeroProps> = ({ profile, onToggleUser }) => {
               color: profile.theme.red,
             }}
           >
-            ✓ Lab 2026
+            {t.stampText}
           </div>
 
           {/* Ilustração Vetorial Desenhada à Mão Personalizada */}
@@ -284,7 +288,7 @@ export const Hero: React.FC<HeroProps> = ({ profile, onToggleUser }) => {
             }}
           >
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Alternar para {profile.id === 'murilo' ? 'Letícia' : 'Murilo'}</span>
+            <span>{t.switchToProfile(targetName)}</span>
           </button>
         </div>
       </div>

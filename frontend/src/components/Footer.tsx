@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { ArrowUp, Coffee } from 'lucide-react';
 import type { ProfileData } from '../types';
+import type { Translations } from '../data/translations';
 import { soundManager } from '../utils/soundEffects';
 
 interface FooterProps {
   profile: ProfileData;
   onToast: (msg: string) => void;
+  t: Translations['footer'];
 }
 
-export const Footer: React.FC<FooterProps> = ({ profile, onToast }) => {
+export const Footer: React.FC<FooterProps> = ({ profile, onToast, t }) => {
   const [coffeeCount, setCoffeeCount] = useState<number>(4);
 
   const scrollToTop = () => {
@@ -21,9 +23,9 @@ export const Footer: React.FC<FooterProps> = ({ profile, onToast }) => {
     const newCount = coffeeCount + 1;
     setCoffeeCount(newCount);
     if (newCount === 5) {
-      onToast('Mais um café fresquinho adicionado! ☕');
+      onToast(t.coffeeToast1);
     } else if (newCount === 10) {
-      onToast('Nível de cafeína no limite máximo de produtividade! 🚀⚡');
+      onToast(t.coffeeToast2);
     }
   };
 
@@ -43,10 +45,10 @@ export const Footer: React.FC<FooterProps> = ({ profile, onToast }) => {
             color: profile.theme.ink,
             border: `2px solid ${profile.theme.ink}`,
           }}
-          title="Voltar ao início da página"
+          title={t.backToTop}
         >
           <ArrowUp className="w-3.5 h-3.5" />
-          <span>Voltar ao topo</span>
+          <span>{t.backToTop}</span>
         </button>
 
         {/* Easter Egg do Café */}
@@ -60,17 +62,17 @@ export const Footer: React.FC<FooterProps> = ({ profile, onToast }) => {
         >
           <Coffee className="w-4 h-4" style={{ color: profile.theme.red }} />
           <span className="font-mono text-xs" style={{ color: profile.theme.ink }}>
-            Cafés consumidos neste projeto: <strong>{coffeeCount}</strong> ☕ (clique p/ abastecer)
+            {t.coffeeCountText(coffeeCount)}
           </span>
         </div>
 
         {/* Créditos e Assinatura */}
         <div className="space-y-1.5 font-mono text-xs" style={{ color: profile.theme.pencil }}>
           <p className="m-0">
-            Feito à mão (com código limpo & muito café) © 2026 // <strong>{profile.fullName}</strong>
+            {t.credits(profile.fullName)}
           </p>
           <p className="m-0 text-[0.7rem] opacity-75">
-            Portfólio Compartilhado: <strong>Murilo Freitas</strong> (Full-Stack) & <strong>Letícia Figueiredo</strong> (Data Engineering)
+            {t.subcredits}
           </p>
         </div>
       </div>

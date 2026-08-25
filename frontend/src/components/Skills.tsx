@@ -1,18 +1,21 @@
 import React, { useRef, useState } from 'react';
 import { Sparkles } from 'lucide-react';
 import type { ProfileData } from '../types';
+import type { Translations } from '../data/translations';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { soundManager } from '../utils/soundEffects';
 
 interface SkillsProps {
   profile: ProfileData;
+  t: Translations['skills'];
 }
 
-export const Skills: React.FC<SkillsProps> = ({ profile }) => {
+export const Skills: React.FC<SkillsProps> = ({ profile, t }) => {
   const sectionRef = useRef<HTMLElement>(null);
   useScrollReveal(sectionRef);
 
-  const [activeCategoryIndex, setActiveCategoryIndex] = useState<number>(0);
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
+  const activeCategoryIndex = selectedCategoryIndex < profile.skillsCategories.length ? selectedCategoryIndex : 0;
 
   return (
     <section
@@ -24,15 +27,15 @@ export const Skills: React.FC<SkillsProps> = ({ profile }) => {
       {/* Cabeçalho da Seção */}
       <div className="flex items-baseline gap-4 mb-8">
         <span className="font-mono text-sm font-bold" style={{ color: profile.theme.pencil }}>
-          03 //
+          {t.sectionNum}
         </span>
         <h2 className="font-caveat font-bold m-0 leading-tight text-4xl sm:text-5xl" style={{ color: profile.theme.ink }}>
-          ferramentas & stack
+          {t.sectionTitle}
         </h2>
       </div>
 
       <p className="font-roboto text-sm sm:text-base max-w-[60ch] mb-10 leading-relaxed" style={{ color: profile.theme.pencil }}>
-        Tecnologias, frameworks e ferramentas que utilizo diariamente para criar soluções de ponta a ponta com alta fidelidade, robustez e performance.
+        {t.sectionSubtitle}
       </p>
 
       {/* Seletor de Categorias de Habilidades (Abas Estilo Caderno) */}
@@ -44,7 +47,7 @@ export const Skills: React.FC<SkillsProps> = ({ profile }) => {
               key={idx}
               onClick={() => {
                 soundManager.playClick();
-                setActiveCategoryIndex(idx);
+                setSelectedCategoryIndex(idx);
               }}
               className="sketchy px-4 py-2 font-mono text-xs font-bold cursor-pointer transition-all duration-200 active:scale-95"
               style={{
@@ -138,7 +141,7 @@ export const Skills: React.FC<SkillsProps> = ({ profile }) => {
       <div className="mt-12 p-6 rounded-sm border-2 border-dashed" style={{ borderColor: profile.theme.line, backgroundColor: profile.theme.paper2 }}>
         <h4 className="font-mono text-xs uppercase tracking-widest font-bold mb-3 flex items-center gap-2" style={{ color: profile.theme.pencil }}>
           <Sparkles className="w-3.5 h-3.5" style={{ color: profile.theme.red }} />
-          Visão Geral do Ecossistema
+          {t.ecosystemTitle}
         </h4>
         <div className="flex flex-wrap gap-2">
           {profile.skillsCategories

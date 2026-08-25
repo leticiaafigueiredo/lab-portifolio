@@ -1,14 +1,16 @@
 import React, { useRef, useState } from 'react';
 import { Briefcase, GraduationCap, Award, MapPin, Calendar, CheckCircle2 } from 'lucide-react';
 import type { ProfileData } from '../types';
+import type { Translations } from '../data/translations';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { soundManager } from '../utils/soundEffects';
 
 interface AboutProps {
   profile: ProfileData;
+  t: Translations['about'];
 }
 
-export const About: React.FC<AboutProps> = ({ profile }) => {
+export const About: React.FC<AboutProps> = ({ profile, t }) => {
   const sectionRef = useRef<HTMLElement>(null);
   useScrollReveal(sectionRef);
 
@@ -29,10 +31,10 @@ export const About: React.FC<AboutProps> = ({ profile }) => {
       {/* Cabeçalho da Seção */}
       <div className="flex items-baseline gap-4 mb-10">
         <span className="font-mono text-sm font-bold" style={{ color: profile.theme.pencil }}>
-          01 //
+          {t.sectionNum}
         </span>
         <h2 className="font-caveat font-bold m-0 leading-tight text-4xl sm:text-5xl" style={{ color: profile.theme.ink }}>
-          minha trajetória & notas
+          {t.sectionTitle}
         </h2>
       </div>
 
@@ -57,7 +59,7 @@ export const About: React.FC<AboutProps> = ({ profile }) => {
             className="font-mono text-[0.72rem] tracking-widest uppercase font-bold block mb-4"
             style={{ color: profile.theme.pencil }}
           >
-            ★ bloco de anotações pessoais
+            {t.personalNotesTitle}
           </span>
 
           <div className="space-y-4 font-roboto text-sm sm:text-base leading-relaxed" style={{ color: profile.theme.ink }}>
@@ -90,7 +92,7 @@ export const About: React.FC<AboutProps> = ({ profile }) => {
             />
 
             <h3 className="font-caveat text-2xl font-bold mb-4 m-0" style={{ color: profile.theme.ink }}>
-              o que me move no dia a dia:
+              {t.principlesTitle}
             </h3>
 
             <div className="space-y-3">
@@ -124,10 +126,10 @@ export const About: React.FC<AboutProps> = ({ profile }) => {
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
           <div>
             <h3 className="font-caveat font-bold text-3xl sm:text-4xl m-0" style={{ color: profile.theme.ink }}>
-              jornada profissional & estudos
+              {t.journeyTitle}
             </h3>
             <p className="font-mono text-xs mt-1" style={{ color: profile.theme.pencil }}>
-              marcos cronológicos e projetos por onde passei
+              {t.journeySubtitle}
             </p>
           </div>
 
@@ -146,7 +148,7 @@ export const About: React.FC<AboutProps> = ({ profile }) => {
                 color: timelineFilter === 'all' ? profile.theme.paper : profile.theme.ink,
               }}
             >
-              Todos
+              {t.filterAll}
             </button>
             <button
               onClick={() => {
@@ -161,7 +163,7 @@ export const About: React.FC<AboutProps> = ({ profile }) => {
                 color: timelineFilter === 'work' ? profile.theme.paper : profile.theme.ink,
               }}
             >
-              Experiência
+              {t.filterWork}
             </button>
             <button
               onClick={() => {
@@ -176,7 +178,7 @@ export const About: React.FC<AboutProps> = ({ profile }) => {
                 color: timelineFilter === 'education' ? profile.theme.paper : profile.theme.ink,
               }}
             >
-              Formação
+              {t.filterEducation}
             </button>
           </div>
         </div>

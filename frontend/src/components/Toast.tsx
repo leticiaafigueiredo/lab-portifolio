@@ -2,15 +2,20 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, Sparkles, X } from 'lucide-react';
 import type { ProfileTheme } from '../types';
+import type { Translations } from '../data/translations';
 
 interface ToastProps {
   message: string | null;
   type?: 'success' | 'info';
   onClose: () => void;
   theme: ProfileTheme;
+  t?: Translations['toast'];
 }
 
-export const Toast: React.FC<ToastProps> = ({ message, type = 'success', onClose, theme }) => {
+export const Toast: React.FC<ToastProps> = ({ message, type = 'success', onClose, theme, t }) => {
+  const successLabel = t ? t.successHeader : 'Nota Anotada!';
+  const infoLabel = t ? t.infoHeader : 'Informação';
+
   return (
     <AnimatePresence>
       {message && (
@@ -42,7 +47,7 @@ export const Toast: React.FC<ToastProps> = ({ message, type = 'success', onClose
 
             <div>
               <span className="font-mono text-[0.7rem] uppercase tracking-wider font-bold block opacity-75">
-                {type === 'success' ? 'Nota Anotada!' : 'Informação'}
+                {type === 'success' ? successLabel : infoLabel}
               </span>
               <p className="font-architects text-sm mt-0.5 leading-snug">
                 {message}

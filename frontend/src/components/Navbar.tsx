@@ -1,35 +1,44 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Volume2, VolumeX, Menu, X, ArrowLeftRight, Sparkles } from 'lucide-react';
-import type { ProfileData, ProfileId } from '../types';
+import { Volume2, VolumeX, Menu, X, ArrowLeftRight, Sparkles, Languages } from 'lucide-react';
+import type { Language, ProfileData, ProfileId } from '../types';
+import type { Translations } from '../data/translations';
 import { soundManager } from '../utils/soundEffects';
 
 interface NavbarProps {
   profile: ProfileData;
   currentUser: ProfileId;
   onToggleUser: () => void;
+  language: Language;
+  onToggleLanguage: () => void;
   isMuted: boolean;
   onToggleSound: () => void;
+  t: Translations['nav'];
 }
-
-const navLinks = [
-  { href: '#sobre', label: 'sobre', num: '01' },
-  { href: '#trabalhos', label: 'trabalhos', num: '02' },
-  { href: '#habilidades', label: 'habilidades', num: '03' },
-  { href: '#rabiscos', label: 'rabiscos', num: '04' },
-  { href: '#contato', label: 'contato', num: '05' },
-];
 
 export const Navbar: React.FC<NavbarProps> = ({
   profile,
   currentUser,
   onToggleUser,
+  language,
+  onToggleLanguage,
   isMuted,
   onToggleSound,
+  t,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const targetName = currentUser === 'murilo' ? 'Letícia' : 'Murilo';
-  const targetRole = currentUser === 'murilo' ? 'Engenharia de Dados' : 'Full-Stack Dev';
+  const targetRole = currentUser === 'murilo'
+    ? (language === 'pt' ? 'Engenharia de Dados' : 'Data Engineering')
+    : (language === 'pt' ? 'Full-Stack Dev' : 'Full-Stack Dev');
+
+  const navLinks = [
+    { href: '#sobre', label: t.about, num: '01' },
+    { href: '#trabalhos', label: t.works, num: '02' },
+    { href: '#habilidades', label: t.skills, num: '03' },
+    { href: '#rabiscos', label: t.doodles, num: '04' },
+    { href: '#contato', label: t.contact, num: '05' },
+  ];
 
   const handleLinkClick = () => {
     soundManager.playClick();
@@ -98,15 +107,31 @@ export const Navbar: React.FC<NavbarProps> = ({
           ))}
         </nav>
 
-        {/* Controles: Switch de Perfil + Áudio + Menu Mobile */}
-        <div className="flex items-center gap-2.5">
+        {/* Controles: Idioma + Som + Switch de Perfil + Menu Mobile */}
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* Botão de Troca de Idioma (PT / EN) */}
+          <button
+            onClick={onToggleLanguage}
+            title={t.langTitle}
+            aria-label="Trocar idioma"
+            className="sketchy px-2.5 sm:px-3 py-1.5 font-mono text-xs font-bold transition-all duration-200 active:scale-95 flex items-center gap-1.5 cursor-pointer shadow-xs"
+            style={{
+              backgroundColor: profile.theme.paper2,
+              color: profile.theme.ink,
+              border: `1.5px solid ${profile.theme.ink}`,
+            }}
+          >
+            <Languages className="w-3.5 h-3.5" style={{ color: profile.theme.red }} />
+            <span className="tracking-wider">{language === 'pt' ? 'EN' : 'PT'}</span>
+          </button>
+
           {/* Botão de Som / Mudo */}
           <button
             onClick={() => {
               onToggleSound();
               if (isMuted) soundManager.playPop();
             }}
-            title={isMuted ? 'Ativar efeitos sonoros de papel' : 'Desativar efeitos sonoros'}
+            title={isMuted ? t.soundToggleUnmute : t.soundToggleMute}
             aria-label="Controle de áudio"
             className="p-2 cursor-pointer rounded-sm border transition-transform active:scale-95 flex items-center justify-center"
             style={{
@@ -130,10 +155,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               color: '#221F1B',
               border: '2px solid #221F1B',
             }}
-            title={`Ver portfólio de ${targetName} (${targetRole})`}
+            title={`${t.switchTo} ${targetName} (${targetRole})`}
           >
             <ArrowLeftRight className="w-3.5 h-3.5 transition-transform group-hover:rotate-180 duration-300" />
-            <span className="hidden sm:inline">Mudar p/</span>
+            <span className="hidden sm:inline">{t.switchTo}</span>
             <span>{targetName}</span>
             <Sparkles className="w-3 h-3 text-red-600 animate-pulse" />
           </button>
@@ -183,8 +208,29 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <span className="text-xs opacity-50">{item.num} →</span>
                 </a>
               ))}
-              <div className="pt-2 flex items-center justify-between text-xs opacity-75 font-architects">
-                <span>Vendo: {profile.fullName}</span>
+
+              {/* Linha de Idioma no Menu Mobile */}
+              <div className="pt-2 flex items-center justify-between text-xs border-b border-dashed pb-3" style={{ borderColor: profile.theme.line }}>
+                <span className="opacity-75">Idioma / Language:</span>
+                <button
+                  onClick={() => {
+                    onToggleLanguage();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="sketchy px-3 py-1 font-bold flex items-center gap-1.5"
+                  style={{
+                    backgroundColor: profile.theme.yellow,
+                    color: '#221F1B',
+                    border: '1.5px solid #221F1B',
+                  }}
+                >
+                  <Languages className="w-3.5 h-3.5" />
+                  <span>{language === 'pt' ? 'Mudar para Inglês (EN)' : 'Switch to Portuguese (PT)'}</span>
+                </button>
+              </div>
+
+              <div className="pt-1 flex items-center justify-between text-xs opacity-75 font-architects">
+                <span>{t.viewing} {profile.fullName}</span>
                 <span>{profile.role}</span>
               </div>
             </div>

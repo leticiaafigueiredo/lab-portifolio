@@ -1,3 +1,4 @@
+export type Language = 'pt' | 'en';
 export type ProfileId = 'murilo' | 'leticia';
 
 export interface Project {

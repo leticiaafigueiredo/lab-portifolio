@@ -17,6 +17,9 @@ function PortfolioMain() {
     currentUser,
     profile,
     toggleUser,
+    language,
+    toggleLanguage,
+    t,
     selectedProject,
     setSelectedProject,
     toastMessage,
@@ -40,24 +43,27 @@ function PortfolioMain() {
       {/* Filtros SVG para bordas rugosas e texturas */}
       <SvgFilters />
 
-      {/* Barra de Navegação */}
+      {/* Barra de Navegação com Troca de Idioma e Perfil */}
       <Navbar
         profile={profile}
         currentUser={currentUser}
         onToggleUser={toggleUser}
+        language={language}
+        onToggleLanguage={toggleLanguage}
         isMuted={isMuted}
         onToggleSound={toggleSound}
+        t={t.nav}
       />
 
       {/* Conteúdo Principal com Container Centralizado */}
       <main className="max-w-5xl mx-auto px-4 sm:px-6">
-        <Hero profile={profile} onToggleUser={toggleUser} />
-        <About profile={profile} />
-        <Projects profile={profile} onSelectProject={setSelectedProject} />
-        <Skills profile={profile} />
-        <DoodlePad profile={profile} onToast={showToast} />
-        <Contact profile={profile} onToast={showToast} />
-        <Footer profile={profile} onToast={showToast} />
+        <Hero profile={profile} onToggleUser={toggleUser} t={t.hero} />
+        <About profile={profile} t={t.about} />
+        <Projects profile={profile} onSelectProject={setSelectedProject} t={t.projects} />
+        <Skills profile={profile} t={t.skills} />
+        <DoodlePad profile={profile} onToast={showToast} t={t.doodlePad} />
+        <Contact profile={profile} onToast={showToast} t={t.contact} />
+        <Footer profile={profile} onToast={showToast} t={t.footer} />
       </main>
 
       {/* Modal de Detalhes do Projeto */}
@@ -65,6 +71,7 @@ function PortfolioMain() {
         project={selectedProject}
         onClose={() => setSelectedProject(null)}
         theme={profile.theme}
+        t={t.projectModal}
       />
 
       {/* Notificação Toast */}
@@ -72,6 +79,7 @@ function PortfolioMain() {
         message={toastMessage}
         onClose={clearToast}
         theme={profile.theme}
+        t={t.toast}
       />
     </div>
   );
