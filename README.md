@@ -1,5 +1,13 @@
 # ✏️ Portfólio Sketchbook // Murilo Freitas & Letícia Figueiredo
 
+<div>
+  <p>Disponível em:</p>
+  <ul>
+    <li><a href="https://lab-portifolio-murilo.vercel.app/">Portfólio Murilo Freitas</a></li>
+    <li><a href="https://lab-portifolio-leticia.vercel.app/">Portfólio Letícia Azevedo</a></li>
+  </ul>
+</div>
+
 <p align="center">
   <img src="https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React 19" />
   <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
