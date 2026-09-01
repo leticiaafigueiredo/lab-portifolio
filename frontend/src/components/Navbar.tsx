@@ -29,7 +29,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const targetName = currentUser === 'murilo' ? 'Letícia' : 'Murilo';
   const targetRole = currentUser === 'murilo'
-    ? (language === 'pt' ? 'Engenharia de Dados' : 'Data Engineering')
+    ? (language === 'pt' ? 'Dev Java' : 'Java Developer')
     : (language === 'pt' ? 'Full-Stack Dev' : 'Full-Stack Dev');
 
   const navLinks = [

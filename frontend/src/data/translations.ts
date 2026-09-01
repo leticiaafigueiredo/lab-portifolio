@@ -251,7 +251,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       coffeeToast1: 'Mais um café fresquinho adicionado! ☕',
       coffeeToast2: 'Nível de cafeína no limite máximo de produtividade! 🚀⚡',
       credits: (fullName: string) => `Feito à mão (com código limpo & muito café) © 2026 // ${fullName}`,
-      subcredits: 'Portfólio Compartilhado: Murilo Freitas (Full-Stack) & Letícia Figueiredo (Data Engineering)',
+      subcredits: 'Portfólio Compartilhado: Murilo Freitas (Full-Stack) & Letícia Figueiredo (Java)',
     },
     toast: {
       successHeader: 'Nota Anotada!',
@@ -379,7 +379,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       coffeeToast1: 'Fresh cup of coffee added! ☕',
       coffeeToast2: 'Caffeine level at maximum productivity! 🚀⚡',
       credits: (fullName: string) => `Handcrafted (with clean code & lots of coffee) © 2026 // ${fullName}`,
-      subcredits: 'Shared Portfolio: Murilo Freitas (Full-Stack) & Letícia Figueiredo (Data Engineering)',
+      subcredits: 'Shared Portfolio: Murilo Freitas (Full-Stack) & Letícia Figueiredo (Java)',
     },
     toast: {
       successHeader: 'Note Taken!',

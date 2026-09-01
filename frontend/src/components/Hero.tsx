@@ -266,8 +266,8 @@ export const Hero: React.FC<HeroProps> = ({ profile, onToggleUser, t }) => {
                 <circle cx="150" cy="115" r="3.5" fill={profile.theme.yellow} stroke={profile.theme.ink} strokeWidth="1.5" />
                 {/* Ombro e gola */}
                 <path d="M35 185 C 65 168, 135 168, 165 185 L 175 220 L 25 220 Z" stroke={profile.theme.ink} strokeWidth="3" fill={profile.theme.paper} />
-                {/* Ícone de fluxo de dados na camisa */}
-                <text x="86" y="202" fontFamily="monospace" fontSize="13" fill={profile.theme.blue} fontWeight="bold">λ | ⛁</text>
+                {/* Ícone Java na camisa */}
+                <text x="78" y="202" fontFamily="monospace" fontSize="13" fill={profile.theme.blue} fontWeight="bold">{'{ Java }'}</text>
               </svg>
             )}
           </div>
